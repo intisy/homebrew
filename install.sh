@@ -256,6 +256,7 @@ have_sudo_access() {
 remove() {
   echo "Removing folder: $1"
   sudo rm -r "$1"
+  mkdir "$1"
 }
 remove_files() {
   remove "${HOMEBREW_PREFIX}/bin/brew"
