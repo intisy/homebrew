@@ -183,7 +183,6 @@ else
   TOUCH=("/bin/touch")
   INSTALL=("/usr/bin/install" -d -o "${USER}" -g "${GROUP}" -m "0755")
 fi
-remove_files
 CHMOD=("/bin/chmod")
 MKDIR=("/bin/mkdir" "-p")
 HOMEBREW_BREW_DEFAULT_GIT_REMOTE="https://github.com/Homebrew/brew"
@@ -598,7 +597,8 @@ EOS
   fi
 fi
 
-ohai "This script will install:"
+remove_files
+ohai "This script will overwrite:"
 echo "${HOMEBREW_PREFIX}/bin/brew"
 echo "${HOMEBREW_PREFIX}/share/doc/homebrew"
 echo "${HOMEBREW_PREFIX}/share/man/man1/brew.1"
