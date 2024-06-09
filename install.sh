@@ -183,7 +183,6 @@ else
   TOUCH=("/bin/touch")
   INSTALL=("/usr/bin/install" -d -o "${USER}" -g "${GROUP}" -m "0755")
 fi
-sudo rm -r $HOMEBREW_REPOSITORY
 CHMOD=("/bin/chmod")
 MKDIR=("/bin/mkdir" "-p")
 HOMEBREW_BREW_DEFAULT_GIT_REMOTE="https://github.com/Homebrew/brew"
@@ -258,6 +257,12 @@ execute() {
   if ! "$@"
   then
     echo "$(printf "Failed during: %s" "$(shell_join "$@")") (in directory $PWD), retrying..."
+    sudo rm -r "${HOMEBREW_PREFIX}/bin/brew"
+    sudo rm -r "${HOMEBREW_PREFIX}/share/doc/homebrew"
+    sudo rm -r "${HOMEBREW_PREFIX}/share/man/man1/brew.1"
+    sudo rm -r "${HOMEBREW_PREFIX}/share/zsh/site-functions/_brew"
+    sudo rm -r "${HOMEBREW_PREFIX}/etc/bash_completion.d/brew"
+    sudo rm -r "${HOMEBREW_REPOSITORY}"
     execute "$@"
   fi
 }
