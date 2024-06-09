@@ -270,7 +270,7 @@ execute() {
   then
     echo "$(printf "Failed during: %s" "$(shell_join "$@")") (in directory $PWD), retrying..."
     remove_files
-    execute "$@"
+    install || exit 1
   fi
 }
 
@@ -926,7 +926,7 @@ EOABORT
 fi
 
 ohai "Downloading and installing Homebrew..."
-(
+install() {
   cd "${HOMEBREW_REPOSITORY}" >/dev/null || return
 
   # we do it in four steps to avoid merge errors when reinstalling
@@ -986,7 +986,8 @@ ohai "Downloading and installing Homebrew..."
   fi
 
   execute "${HOMEBREW_PREFIX}/bin/brew" "update" "--force" "--quiet"
-) || exit 1
+}
+install || exit 1
 
 if [[ ":${PATH}:" != *":${HOMEBREW_PREFIX}/bin:"* ]]
 then
