@@ -183,7 +183,7 @@ else
   TOUCH=("/bin/touch")
   INSTALL=("/usr/bin/install" -d -o "${USER}" -g "${GROUP}" -m "0755")
 fi
-rm -r $HOMEBREW_REPOSITORY
+sudo rm -r $HOMEBREW_REPOSITORY
 CHMOD=("/bin/chmod")
 MKDIR=("/bin/mkdir" "-p")
 HOMEBREW_BREW_DEFAULT_GIT_REMOTE="https://github.com/Homebrew/brew"
