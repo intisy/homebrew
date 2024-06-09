@@ -256,7 +256,7 @@ have_sudo_access() {
 execute() {
   if ! "$@"
   then
-    echo "$(printf "Failed during: %s" "$(shell_join "$@")"), retrying..."
+    echo "$(printf "Failed during: %s" "$(shell_join "$@")") (in directory $PWD), retrying..."
     execute "$@"
   fi
 }
