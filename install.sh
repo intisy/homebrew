@@ -183,6 +183,7 @@ else
   TOUCH=("/bin/touch")
   INSTALL=("/usr/bin/install" -d -o "${USER}" -g "${GROUP}" -m "0755")
 fi
+remove_files
 CHMOD=("/bin/chmod")
 MKDIR=("/bin/mkdir" "-p")
 HOMEBREW_BREW_DEFAULT_GIT_REMOTE="https://github.com/Homebrew/brew"
@@ -253,16 +254,23 @@ have_sudo_access() {
   return "${HAVE_SUDO_ACCESS}"
 }
 
+remove() {
+  echo "Removing folder: $1"
+  sudo rm -r "$1"
+}
+remove_files() {
+  remove "${HOMEBREW_PREFIX}/bin/brew"
+  remove "${HOMEBREW_PREFIX}/share/doc/homebrew"
+  remove "${HOMEBREW_PREFIX}/share/man/man1/brew.1"
+  remove "${HOMEBREW_PREFIX}/share/zsh/site-functions/_brew"
+  remove "${HOMEBREW_PREFIX}/etc/bash_completion.d/brew"
+  remove "${HOMEBREW_REPOSITORY}"
+}
 execute() {
   if ! "$@"
   then
     echo "$(printf "Failed during: %s" "$(shell_join "$@")") (in directory $PWD), retrying..."
-    sudo rm -r "${HOMEBREW_PREFIX}/bin/brew"
-    sudo rm -r "${HOMEBREW_PREFIX}/share/doc/homebrew"
-    sudo rm -r "${HOMEBREW_PREFIX}/share/man/man1/brew.1"
-    sudo rm -r "${HOMEBREW_PREFIX}/share/zsh/site-functions/_brew"
-    sudo rm -r "${HOMEBREW_PREFIX}/etc/bash_completion.d/brew"
-    sudo rm -r "${HOMEBREW_REPOSITORY}"
+    remove_files
     execute "$@"
   fi
 }
