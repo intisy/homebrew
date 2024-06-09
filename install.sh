@@ -915,6 +915,7 @@ ohai "Downloading and installing Homebrew..."
 (
   cd "${HOMEBREW_REPOSITORY}" >/dev/null || return
 
+  execute "${USABLE_GIT}" "reset" "--hard" "origin/main"
   # we do it in four steps to avoid merge errors when reinstalling
   execute "${USABLE_GIT}" "-c" "init.defaultBranch=master" "init" "--quiet"
 
