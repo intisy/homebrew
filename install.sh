@@ -597,7 +597,7 @@ EOS
   fi
 fi
 
-remove_files
+$(remove_files)
 ohai "This script will overwrite:"
 echo "${HOMEBREW_PREFIX}/bin/brew"
 echo "${HOMEBREW_PREFIX}/share/doc/homebrew"
